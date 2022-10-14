@@ -72,10 +72,10 @@ if imageconcat:
     pblimit=1e-5
     if mosaic:
         gridder='mosaic'
-	phasecenteractual=phasecenter
+        phasecenteractual=phasecenter
     else:
         gridder='standard'
-	phasecenteractual=''
+        phasecenteractual=''
     deconvolver='multiscale'
     #Scales should be roughly [0, n where n*cell~expected syntesized beam size, 3n, 9n, etc.]
     scales=[0,10,30,90]
@@ -87,7 +87,7 @@ if imageconcat:
     if robust=='':
         robusttask=0.5
     else:
-	robusttask=np.float(robust)
+        robusttask=np.float(robust)
     
     #Remove image if it exists
     os.system('rm -r '+imagename+'.*')
@@ -102,7 +102,7 @@ if imageconcat:
     exportfits(imagename=imagename+'.pb', fitsimage=imagename+'_pb.fits', overwrite=True)
     
     #View result
-    viewer(imagename+'.image')
+    imview(imagename+'.image')
 
 if imagesingles:
     for i in np.arange(nvis):
@@ -111,12 +111,12 @@ if imagesingles:
         imsize=[nxy,nxy]
         cell=[str(dxy*180.0/np.pi*3600.0)+'arcsec']
         pblimit=1e-5
-    	if mosaic:
-        	gridder='standard'
-		phasecenteractual=phasecenter
-    	else:
-        	gridder='standard'
-		phasecenteractual=''
+        if mosaic:
+            gridder='standard'
+            phasecenteractual=phasecenter
+        else:
+            gridder='standard'
+            phasecenteractual=''
         deconvolver='multiscale'
         #Scales should be roughly [0, n where n*cell~expected syntesized beam size, 3n, 9n, etc.]
         scales=[0,10,30,90]
@@ -127,8 +127,8 @@ if imagesingles:
         specmode='mfs'
         if robust=='':
             robusttask=0.5
-	else:
-	    robusttask=np.float(robust)
+        else:
+            robusttask=float(robust)
 
         #Remove image if it exists
         os.system('rm -r '+imagename+'.*')
@@ -145,18 +145,9 @@ if imagesingles:
         exportfits(imagename=imagename+'.pb', fitsimage=imagename+'_pb.fits', overwrite=True)
 
         #View result
-        viewer(imagename+'.image')
+        imview(imagename+'.image')
 
         #RMS X uJy for X" taper, beam X" x X" @Xdeg PA
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 

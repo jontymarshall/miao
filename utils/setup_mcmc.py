@@ -8,19 +8,17 @@
 import numpy as np
 import matplotlib.pyplot as pl
 import os
-os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OMP_NUM_THREADS"] = "4"
 import astropy.io.fits as pf
 import uuid
 import pickle
 from galario.double import chi2Image, sampleImage, threads, get_image_size, sweep
-threads(1)
+threads(4)
 
 #backendaddress=np.load('./backendaddress.npy')
 miaopath, casapath, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
 newbackend, backendaddress = pickle.load(open('backendoptions.npy','rb'))
 rmin_arcsec, rmax_arcsec, nr = pickle.load(open('gridparams.npy','rb'))
-
-
 
 c = 299792458.0
 
@@ -56,7 +54,7 @@ for i in np.arange(nvis):
 
 #### SYSTEM-SPECIFIC INPUTS ####
 tag=sourcetag
-npix=np.int(np.ceil(imsize/(dxyarcsec)/2.0)*2) #Needs to be EVEN. Pixels you actually want to compute radiative transfer over, depends on size of disk.
+npix=int(np.ceil(imsize/(dxyarcsec)/2.0)*2) #Needs to be EVEN. Pixels you actually want to compute radiative transfer over, depends on size of disk.
 imszarcsec=imsize
 sizeau=imszarcsec*dist
 
@@ -144,7 +142,7 @@ for i in np.arange(nvis):
     #Randomly a few pixels from the PB computed by CASA have nans. Remove them
     pbcov[np.where(np.isnan(pbcov))]=0.0
     #Get wavelength which will be a dummy for radmc3d run
-    wav=1e6*c/(header_pbcov['CRVAL3'])
+    wav=1e6*c/(header_pbcov['CRVAL4'])
     #Pad PB coverage if needed
     pbpad[i]=pbcov #Should be of shape [nxy[i],nxy[i]] as pre-defined internally
 
@@ -211,11 +209,13 @@ def lnpostfn(p, locfiles=None):
     ##############
     
     # Run
+    #print(miaopath+'/radmc-3d/version_0.41/srcnoprint/radmc3d image lambda '+str(wav)+' incl '+str(p[3])+
+    #          ' posang '+str(-p[4])+' sizeau '+str(sizeau)+' npix '+str(npix)+' imageunform nostar')
     os.system(miaopath+'/radmc-3d/version_0.41/srcnoprint/radmc3d image lambda '+str(wav)+' incl '+str(p[3])+
               ' posang '+str(-p[4])+' sizeau '+str(sizeau)+' npix '+str(npix)+' imageunform nostar')
     # Read
-    imag     =     radmc3dPy.image.readImage(binary=True)
-
+    imag = radmc3dPy.image.readImage(binary=True)
+    print(np.min(imag),np.max(imag))
     #Normalize model using total flux density which is free parameter
     imagjypixdistscaled = imag.imageJyppix[:,:,0]*p[0]/np.sum(imag.imageJyppix[:,:,0])
 
