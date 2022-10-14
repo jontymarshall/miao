@@ -142,7 +142,7 @@ for i in np.arange(nvis):
     #Randomly a few pixels from the PB computed by CASA have nans. Remove them
     pbcov[np.where(np.isnan(pbcov))]=0.0
     #Get wavelength which will be a dummy for radmc3d run
-    wav=1e6*c/(header_pbcov['CRVAL4'])
+    wav=1e6*c/(header_pbcov['CRVAL3'])
     #Pad PB coverage if needed
     pbpad[i]=pbcov #Should be of shape [nxy[i],nxy[i]] as pre-defined internally
 
