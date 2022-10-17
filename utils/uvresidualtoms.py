@@ -5,10 +5,10 @@ import pickle
 
 #Read in data parameters; THIS ASSUMES YOU ARE IN THE UVFIT FOLDER
 miaopath, casapath, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
-miaopath=miaopath.encode('ascii')
-sourcetag=sourcetag.encode('ascii')
-vis=[x.encode('ascii') for x in vis]
-workingdir=workingdir.encode('ascii')
+miaopath=miaopath#.encode('ascii')
+sourcetag=sourcetag#.encode('ascii')
+vis=[x for x in vis] #[x.encode('ascii') for x in vis]
+workingdir=workingdir#.encode('ascii')
 #print(vis)
 
 #Read in pixel parameters
@@ -57,16 +57,16 @@ for i in np.arange(nvis):
 	ms.close()
 
 	### NOW PUT RESIDUALS IN RESIDUAL MS
-	tb = casac.table() 
+	#tb = casac.table() 
 	# Use CASA table tools to fill new DATA and WEIGHT
 	tb.open(msresiduals[i], nomodify=False)
 	# we need to pull the antennas and find where the autocorrelation values are and aren't
 	ant1 = tb.getcol("ANTENNA1")
 	ant2 = tb.getcol("ANTENNA2")
 	flags   = tb.getcol("FLAG")
-	ac = np.where(ant1 == ant2)[0]
-	if ac.size>0:
-		print "Autocorrelation rows are present in the MS. Cannot deal with such MSs yet, unless those rows are flagged in which case it *should* work (untested)"
+	#ac = np.where(ant1 == ant2)[0]
+	#if ac.size>0:
+	#	print "Autocorrelation rows are present in the MS. Cannot deal with such MSs yet, unless those rows are flagged in which case it *should* work (untested)"
 	
 	#Read residual visibilities
 	u, v, Re, Im, w = np.load('./evaluation/'+tag+'_uvtable_datash'+str(i)+'.npy')
@@ -77,7 +77,7 @@ for i in np.arange(nvis):
 	visres.real=Re_resid
 	visres.imag=Im_resid
 	#HERE get frequency back into visibilities, inverting what was done in mstonumpyortxt.py
-	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size/freqs.shape[0]))
+	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size//freqs.shape[0]))
 	
 	#data_array = np.zeros((2, freqs.shape[0], ant1.shape[0])).astype(complex)
 
@@ -115,7 +115,7 @@ for i in np.arange(nvis):
 	tb.close()
 
 	### NOW PUT MODEL IN MODEL MS
-	tb = casac.table() 
+	#tb = casac.table() 
 	# Use CASA table tools to fill new DATA and WEIGHT
 	tb.open(msmodel[i], nomodify=False)	
 	#Multiplying the weights by best-fit factor found in modelling
@@ -125,7 +125,7 @@ for i in np.arange(nvis):
 	visres=np.zeros(u.size).astype(complex)
 	visres.real=Re_mod
 	visres.imag=Im_mod
-	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size/freqs.shape[0]))
+	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size//freqs.shape[0]))
 
 	#fill non-flagged data points with residuals
 	if npol>=2:
@@ -160,7 +160,7 @@ for i in np.arange(nvis):
 	visres=np.zeros(u.size).astype(complex)
 	visres.real=Re
 	visres.imag=Im
-	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size/freqs.shape[0]))
+	visreswithfreqs = visres.reshape((freqs.shape[0], visres.size//freqs.shape[0]))
 
 	#fill non-flagged data points with residuals
 	if npol>=2:
