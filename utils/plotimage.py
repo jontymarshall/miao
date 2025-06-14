@@ -157,7 +157,7 @@ ax2.tick_params(axis='x', direction='in', labelbottom='on', top='on', color='whi
 
 #Draw a bar to give an idea of the physical scale in AU of the belt, as opposed to the size on the sky in arcseconds.
 #Here I decided to make it 50 AU in size
-asb=AnchoredSizeBar(ax2.transData, sizebarau/dist, str(np.int(sizebarau))+" au", loc=4, pad=0.5,borderpad=0.4, sep=6, frameon=False)
+asb=AnchoredSizeBar(ax2.transData, sizebarau/dist, str(int(sizebarau))+" au", loc=4, pad=0.5,borderpad=0.4, sep=6, frameon=False)
 ax2.add_artist(asb)
 
 

@@ -142,7 +142,7 @@ for i in np.arange(nvis):
     #Randomly a few pixels from the PB computed by CASA have nans. Remove them
     pbcov[np.where(np.isnan(pbcov))]=0.0
     #Get wavelength which will be a dummy for radmc3d run
-    wav=1e6*c/(header_pbcov['CRVAL3'])
+    wav=1e6*c/(header_pbcov['CRVAL4'])
     #Pad PB coverage if needed
     pbpad[i]=pbcov #Should be of shape [nxy[i],nxy[i]] as pre-defined internally
 
@@ -221,7 +221,7 @@ def lnpostfn(p, locfiles=None):
 
     #Pad model so that image is large enough to sample shortest visibility spacings
     modpad=np.zeros((nxy,nxy))
-    modpad[np.int(nxy/2-npix/2):np.int(nxy/2+npix/2),np.int(nxy/2-npix/2):np.int(nxy/2+npix/2)]+=imagjypixdistscaled
+    modpad[int(nxy/2-npix/2):int(nxy/2+npix/2),int(nxy/2-npix/2):int(nxy/2+npix/2)]+=imagjypixdistscaled
 
 
     # Here compute model complex visibilities stored in complex array vis by Fourier Transforming the model image multiplied 
@@ -267,8 +267,8 @@ def lnpostfn(p, locfiles=None):
                 imbkgonly = sweep(fgal, Rminrad, dRrad, nxy, dxy, inc=incgal)
                 for j in np.arange(nvis):
                     visbkg = sampleImage(imbkgonly*fbkg*
-                                         pbpad[j][np.int(pbpad[j].shape[0]/2.0+p[7+countpars]/dxyarcsec), 
-                                               np.int(pbpad[j].shape[1]/2.0-p[6+countpars]/dxyarcsec)]/np.sum(imbkgonly), 
+                                         pbpad[j][int(pbpad[j].shape[0]/2.0+p[7+countpars]/dxyarcsec), 
+                                               int(pbpad[j].shape[1]/2.0-p[6+countpars]/dxyarcsec)]/np.sum(imbkgonly), 
                                          dxy[j], u[j], v[j], PA=PAgal, dRA=dRAbkgrad+dRArad[j], dDec=dDecbkgrad+dDecrad[j])
                     vismodel[j]+=visbkg
                 countpars+=6
@@ -276,7 +276,7 @@ def lnpostfn(p, locfiles=None):
                 for j in np.arange(nvis):
                     #Then add bkg point source
                     visbkg=np.zeros(u[j].size, dtype=np.complex_)
-                    visbkg.real+=fbkg*pbpad[j][np.int(pbpad[j].shape[0]/2.0+p[7+countpars]/dxyarcsec), np.int(pbpad[j].shape[1]/2.0-p[6+countpars]/dxyarcsec)]
+                    visbkg.real+=fbkg*pbpad[j][int(pbpad[j].shape[0]/2.0+p[7+countpars]/dxyarcsec), int(pbpad[j].shape[1]/2.0-p[6+countpars]/dxyarcsec)]
                     #Phase shift bkg in the visibilities in the same way as model is being shifted by Galario.
                     theta = u[j]*2.0*np.pi*(dRAbkgrad+dRArad[j]) + v[j]*2.0*np.pi*(dDecbkgrad+dDecrad[j])
                     visbkg = (np.real(visbkg) + 1j*np.imag(visbkg)) * (np.cos(theta) + 1j*np.sin(theta))
