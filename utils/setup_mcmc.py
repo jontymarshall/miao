@@ -142,7 +142,7 @@ for i in np.arange(nvis):
     #Randomly a few pixels from the PB computed by CASA have nans. Remove them
     pbcov[np.where(np.isnan(pbcov))]=0.0
     #Get wavelength which will be a dummy for radmc3d run
-    wav=1e6*c/(header_pbcov['CRVAL4'])
+    wav=1e6*c/(header_pbcov['CRVAL3'])
     #Pad PB coverage if needed
     pbpad[i]=pbcov #Should be of shape [nxy[i],nxy[i]] as pre-defined internally
 
@@ -215,7 +215,7 @@ def lnpostfn(p, locfiles=None):
               ' posang '+str(-p[4])+' sizeau '+str(sizeau)+' npix '+str(npix)+' imageunform nostar')
     # Read
     imag = radmc3dPy.image.readImage(binary=True)
-    print(np.min(imag),np.max(imag))
+    #print(np.min(imag.imageJyppix[:,:,0]),np.max(imag.imageJyppix[:,:,0]))
     #Normalize model using total flux density which is free parameter
     imagjypixdistscaled = imag.imageJyppix[:,:,0]*p[0]/np.sum(imag.imageJyppix[:,:,0])
 

@@ -51,7 +51,7 @@ class AnchoredSizeBar(AnchoredOffsetbox):
         self.size_bar = AuxTransformBox(transform)
         self.size_bar.add_artist(Rectangle((0, 0), size, 0, ec="white", linewidth=2.0, alpha=0.9))
 
-        self.txt_label = TextArea(label, minimumdescent=False, textprops={'color':'white', 'alpha':0.9})
+        self.txt_label = TextArea(label, textprops={'color':'white', 'alpha':0.9})
 
         self._box = VPacker(children=[self.txt_label, self.size_bar],
                             align="center",
@@ -83,7 +83,7 @@ matplotlib.rcParams.update({'figure.autolayout': True})
 print('***Processing PART 1: CLEANED IMAGE')
 
 ### Read in dust image from fits file, and also read its header which contains information about resolution element, pixel size in arcseconds, etc.
-acont, header_cont =  np.asarray(pf.getdata(data,0, header=True))
+acont, header_cont =  np.asarray(pf.getdata(data,0, header=True),dtype=object)
 #CASA images come as 4D cubes (polarization, frequency, spatial y (north-south) direction, spatial x (east-west) direction).
 #In the case of dust continuum images we have no polarization or frequency, so removing those dimensions below
 imcont=acont[0,0,:,:]
@@ -236,7 +236,7 @@ ax2.tick_params(axis='x', direction='in', labelbottom='on', top='on', color='whi
 print('***Processing PART 3: RESIDUAL IMAGE')
 
 ### Read in dust image from fits file, and also read its header which contains information about resolution element, pixel size in arcseconds, etc.
-acontres, header_contres =  np.asarray(pf.getdata(residdata,0, header=True))
+acontres, header_contres =  np.asarray(pf.getdata(residdata,0, header=True),dtype=object)
 #CASA images come as 4D cubes (polarization, frequency, spatial y (north-south) direction, spatial x (east-west) direction).
 #In the case of dust continuum images we have no polarization or frequency, so removing those dimensions below
 imcontres=acontres[0,0,:,:]

@@ -93,7 +93,7 @@ def makeuvdeprojplot(datavisloc, modelvisloc, paradoffsetloc, uvmax, uvbin_size,
 	uv_intervals=[]
 	uv_intervals_mod=[]
 	uv_bin_edges=np.arange(nbins+1, dtype='float64')*uvbin_size+uvdistmin
-	uv_bin_edges_mod=np.arange(nbins_mod+1, dtype='float64')*((uvdistmax-uvdistmin)/np.float(nbins_mod))+uvdistmin
+	uv_bin_edges_mod=np.arange(nbins_mod+1, dtype='float64')*((uvdistmax-uvdistmin)/float(nbins_mod))+uvdistmin
 
 	#Calculate which data points go in which bin, and figure out average uv distance for that bin for more appropriate plotting
 	for i in range(nbins):                                     
@@ -113,7 +113,7 @@ def makeuvdeprojplot(datavisloc, modelvisloc, paradoffsetloc, uvmax, uvbin_size,
 			bin_uvdist_mod[i] = uvdist[uv_interval_mod].sum()/bin_count_mod[i]
 			bin_weights_mod[i] = np.sum(w[uv_interval_mod])
 		else:
-			bin_uvdist_mod[i] = uv_bin_edges_mod[i]+0.5*((uvdistmax-uvdistmin)/np.float(nbins_mod))
+			bin_uvdist_mod[i] = uv_bin_edges_mod[i]+0.5*((uvdistmax-uvdistmin)/float(nbins_mod))
 		uv_intervals_mod.append(uv_interval_mod)
 
 	#Calculate real and imaginary of data, model and errors for each bin 
