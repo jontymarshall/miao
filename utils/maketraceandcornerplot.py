@@ -79,14 +79,10 @@ ax[-1,1].set_xlabel('sampling')
 fig.savefig(traceplotname+'.pdf')
 #pl.close()
 #os.system('evince '+traceplotname+'.pdf &')
-os.system('cp -r '+traceplotname+'.pdf ../../plots/.')
+os.system('cp -r '+traceplotname+'.pdf ../plots/.')
 
 #
 print('NB: Code is assuming that you chose the end of burn-in phase correctly.')
-
-
-
-
 
 
 ###########
@@ -118,7 +114,7 @@ for i in np.arange(ndim):
 fig.savefig(cornername+'.pdf')
 #pl.close()
 #os.system('evince '+cornername+'.pdf &')
-os.system('cp -r '+cornername+'.pdf ../../plots/.')
+os.system('cp -r '+cornername+'.pdf ../plots/.')
 
 #Produce smaller corner
 fig, ax=pl.subplots(len(correspondingparameterindicesforchain),len(correspondingparameterindicesforchain),figsize=(20*len(correspondingparameterindicesforchain)/(ndim-1.0),20*len(correspondingparameterindicesforchain)/(ndim-1.0)), gridspec_kw={'wspace': 0.03})
@@ -130,7 +126,7 @@ for i in np.arange(len(correspondingparameterindicesforchain)):
 pl.savefig(cornername+'_small.pdf')
 #pl.close()
 #os.system('evince '+cornername+'_small.pdf &')
-os.system('cp -r '+cornername+'_small.pdf ../../plots/.')
+os.system('cp -r '+cornername+'_small.pdf ../plots/.')
 
 # Reset font to standard
 font={'family':'Times New Roman', 'size':24}	

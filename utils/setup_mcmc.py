@@ -16,7 +16,7 @@ from galario.double import chi2Image, sampleImage, threads, get_image_size, swee
 threads(4)
 
 #backendaddress=np.load('./backendaddress.npy')
-miaopath, casapath, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
+miaopath, casapath, carta, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
 newbackend, backendaddress = pickle.load(open('backendoptions.npy','rb'))
 rmin_arcsec, rmax_arcsec, nr = pickle.load(open('gridparams.npy','rb'))
 

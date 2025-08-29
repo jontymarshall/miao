@@ -102,7 +102,7 @@ if imageconcat:
     exportfits(imagename=imagename+'.pb', fitsimage=imagename+'_pb.fits', overwrite=True)
     
     #View result
-    imview(imagename+'.image')
+    #imview(imagename+'.image')
 
 if imagesingles:
     for i in np.arange(nvis):
@@ -145,7 +145,7 @@ if imagesingles:
         exportfits(imagename=imagename+'.pb', fitsimage=imagename+'_pb.fits', overwrite=True)
 
         #View result
-        imview(imagename+'.image')
+        #imview(imagename+'.image')
 
         #RMS X uJy for X" taper, beam X" x X" @Xdeg PA
 

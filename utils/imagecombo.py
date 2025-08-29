@@ -30,7 +30,7 @@ class AnchoredEllipse(AnchoredOffsetbox):
         pad, borderpad in fraction of the legend font size (or prop)
         """
         self._box = AuxTransformBox(transform)
-        self.ellipse = Ellipse((0, 0), width, height, angle, linewidth=2, fill=False, color='white', alpha=0.9)
+        self.ellipse = Ellipse((0, 0), width, height, angle=angle, linewidth=2, fill=False, color='white', alpha=0.9)
         self._box.add_artist(self.ellipse)
 
         AnchoredOffsetbox.__init__(self, loc, pad=pad, borderpad=borderpad,
