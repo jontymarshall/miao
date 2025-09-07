@@ -4,7 +4,7 @@ import os
 import pickle
 
 #Read in data parameters; THIS ASSUMES YOU ARE IN THE UVFIT FOLDER
-miaopath, casapath, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
+miaopath, casapath, carta, sourcetag, workingdir, vis, nvis = pickle.load(open('../dirvises.npy','rb'))
 miaopath=miaopath#.encode('ascii')
 sourcetag=sourcetag#.encode('ascii')
 vis=[x for x in vis] #[x.encode('ascii') for x in vis]
@@ -26,7 +26,6 @@ msmodel=[[] for x in vis]
 for i in np.arange(nvis):
 	print('Processing dataset '+vis[i])
 	msdata[i]=workingdir+'/'+sourcetag+'/'+'calibratedms/'+vis[i]
-	
 
 	msresiduals[i]=workingdir+'/'+sourcetag+'/calibratedms/'+sourcetag+'_calibratedvis_cont_'+str(i)+'_res.ms'
 	#viscur=msresiduals[i]

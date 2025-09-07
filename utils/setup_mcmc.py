@@ -151,7 +151,7 @@ if ngal>=1:
 
         # Radial grid parameters for galaxy, grid over which the dust density will be computed. Make sure the step is smaller or equal to the pixel size, and that we roughly cover the extent of the image in arcsec
         Rmin = 0.00001  # arcsec
-        dR = 0.01    # arcsec
+        dR = 0.1    # arcsec
         nR = 256
         print('Grid goes out to '+str(dR*nR)+' arcsec radius')
         print('Image goes out to '+str(nxy*dxy*180.0/np.pi*3600.0/2.0)+' arcsec radius')
@@ -161,6 +161,8 @@ if ngal>=1:
         
         #Set up Gaussian radial profile function for bkg galaxy 
         def GaussianProfileGalaxy(f0, sigma, Rmin, dR, nR):
+            arcsec = (180.0/np.pi)*3600.0 #radians -> arcsec
+
             sigma *= arcsec
             Rmin *= arcsec
             dR *= arcsec
@@ -260,6 +262,7 @@ def lnpostfn(p, locfiles=None):
             fbkg, dRAbkgrad, dDecbkgrad = p[5+countpars], p[6+countpars]/3600.0*np.pi/180.0, p[7+countpars]/3600.0*np.pi/180.0
             
             if resolved[i]:
+                deg = (180.0/np.pi) #radians -> degrees
                 sigmagal, PAgal, incgal = p[8+countpars], p[9+countpars]*deg, p[10+countpars]*deg
                 #Then add the bkg source as a 2D Gaussian inclined with Galario functions
                 fgal = GaussianProfileGalaxy(1.0, sigmagal, Rmin, dR, nR)
