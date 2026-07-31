@@ -26,19 +26,20 @@ msmodel=[[] for x in vis]
 for i in np.arange(nvis):
 	print('Processing dataset '+vis[i])
 	msdata[i]=workingdir+'/'+sourcetag+'/'+'calibratedms/'+vis[i]
+	
 
-	msresiduals[i]=workingdir+'/'+sourcetag+'/calibratedms/'+sourcetag+'_calibratedvis_cont_'+str(i)+'_res.ms'
+	msresiduals[i]=workingdir+'/'+sourcetag+'/calibratedms/'+sourcetag+'_calibrated_merged_'+str(i)+'_res.ms'
 	#viscur=msresiduals[i]
 	os.system('rm -r '+msresiduals[i])
 	shutil.copytree(msdata[i], msresiduals[i])
 
 	#Now also make a new vis for reweighted data
-	msrwdata[i]=workingdir+'/'+sourcetag+'/calibratedms/'+tag+'_calibratedvis_cont_'+str(i)+'_rwdat.ms'
+	msrwdata[i]=workingdir+'/'+sourcetag+'/calibratedms/'+sourcetag+'_calibrated_merged_'+str(i)+'_rwdat.ms'
 	os.system('rm -r '+msrwdata[i])
 	shutil.copytree(msdata[i], msrwdata[i])
 
 	#And finally one for the model
-	msmodel[i]=workingdir+'/'+sourcetag+'/calibratedms/'+tag+'_calibratedvis_cont_'+str(i)+'_model.ms'
+	msmodel[i]=workingdir+'/'+sourcetag+'/calibratedms/'+sourcetag+'_calibrated_merged_'+str(i)+'_model.ms'
 	os.system('rm -r '+msmodel[i])
 	shutil.copytree(msdata[i], msmodel[i])
 

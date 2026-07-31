@@ -27,3 +27,4 @@ radmc-3d/version_0.41/python/radmc3dPy/models/__pycache__/spher1d_1.cpython-38.p
 radmc-3d/version_0.41/python/radmc3dPy/models/__pycache__/spher2d_1.cpython-38.pyc
 radmc-3d/version_0.41/python/radmc3dPy/models/__pycache__/test_scattering_1.cpython-38.pyc
 tutorials/imaging.ipynb
+.DS_Store
